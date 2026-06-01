@@ -1,0 +1,95 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile   # <-- FIXED (important based on your structure)
+
+    container_name: ecommerce-app
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+
+    working_dir: /app
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ecommerce
+      SPRING_DATASOURCE_USERNAME: ecommerce_user
+      SPRING_DATASOURCE_PASSWORD: password123
+
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+
+    depends_on:
+      - postgres
+      - redis
+
+    networks:
+      - ecommerce-network
+
+
+  postgres:
+    image: postgres:16
+    container_name: ecommerce-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ecommerce
+      POSTGRES_USER: ecommerce_user
+      POSTGRES_PASSWORD: password123
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    networks:
+      - ecommerce-network
+
+
+  redis:
+    image: redis:7-alpine
+    container_name: ecommerce-redis
+    restart: unless-stopped
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - redisdata:/data
+
+    networks:
+      - ecommerce-network
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ecommerce-pgadmin
+    restart: unless-stopped
+
+    ports:
+      - "5050:80"
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+
+    depends_on:
+      - postgres
+
+    networks:
+      - ecommerce-network
+
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  ecommerce-network:
+    driver: bridge
