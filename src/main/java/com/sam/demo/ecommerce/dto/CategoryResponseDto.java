@@ -1,4 +1,4 @@
-package com.sam.demo.job.dto;
+package com.sam.demo.ecommerce.dto;
 
 import lombok.Builder;
 import lombok.Data;

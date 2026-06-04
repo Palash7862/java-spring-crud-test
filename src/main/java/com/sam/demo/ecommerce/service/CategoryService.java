@@ -1,8 +1,7 @@
-package com.sam.demo.job.service;
+package com.sam.demo.ecommerce.service;
 
-import com.sam.demo.job.dto.CategoryRequestDto;
-import com.sam.demo.job.dto.CategoryResponseDto;
-import org.springframework.http.ResponseEntity;
+import com.sam.demo.ecommerce.dto.CategoryRequestDto;
+import com.sam.demo.ecommerce.dto.CategoryResponseDto;
 
 import java.util.List;
 

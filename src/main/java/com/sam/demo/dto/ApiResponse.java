@@ -1,13 +1,14 @@
-package com.sam.demo.helper;
+package com.sam.demo.dto;
 
 import lombok.*;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponse<T> {
+
+    private int status;
 
     private boolean success;
 

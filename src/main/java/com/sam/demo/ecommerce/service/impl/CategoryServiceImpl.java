@@ -1,12 +1,13 @@
-package com.sam.demo.job.service.impl;
+package com.sam.demo.ecommerce.service.impl;
 
+import com.sam.demo.exception.DuplicateResourceException;
 import com.sam.demo.exception.ResourceNotFoundException;
-import com.sam.demo.job.dto.CategoryRequestDto;
-import com.sam.demo.job.dto.CategoryResponseDto;
-import com.sam.demo.job.entity.Category;
-import com.sam.demo.job.mapper.CategoryMapper;
-import com.sam.demo.job.repository.CategoryRepository;
-import com.sam.demo.job.service.CategoryService;
+import com.sam.demo.ecommerce.dto.CategoryRequestDto;
+import com.sam.demo.ecommerce.dto.CategoryResponseDto;
+import com.sam.demo.ecommerce.entity.Category;
+import com.sam.demo.ecommerce.mapper.CategoryMapper;
+import com.sam.demo.ecommerce.repository.CategoryRepository;
+import com.sam.demo.ecommerce.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto create(CategoryRequestDto dto) {
+        if(categoryRepository.findByName(dto.getName()).isPresent()) {
+            throw new DuplicateResourceException("Category already exists");
+        }
+
         Category category = categoryMapper.toEntity(dto);
         Category saved = categoryRepository.save(category);
 

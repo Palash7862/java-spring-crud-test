@@ -1,8 +1,8 @@
-package com.sam.demo.job.mapper;
+package com.sam.demo.ecommerce.mapper;
 
-import com.sam.demo.job.dto.CategoryRequestDto;
-import com.sam.demo.job.dto.CategoryResponseDto;
-import com.sam.demo.job.entity.Category;
+import com.sam.demo.ecommerce.dto.CategoryRequestDto;
+import com.sam.demo.ecommerce.dto.CategoryResponseDto;
+import com.sam.demo.ecommerce.entity.Category;
 import org.springframework.stereotype.Component;
 
 

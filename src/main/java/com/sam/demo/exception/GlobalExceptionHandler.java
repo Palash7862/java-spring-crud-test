@@ -1,8 +1,8 @@
 package com.sam.demo.exception;
 
-import com.sam.demo.helper.ApiResponse;
+import com.sam.demo.dto.ApiResponse;
+import com.sam.demo.util.ResponseBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -10,24 +10,32 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse<Void>> handleNotFound(ResourceNotFoundException ex) {
-        ApiResponse<Void> response = ApiResponse.<Void>builder()
-                .success(false)
-                .message(ex.getMessage())
-                .data(null)
-                .build();
+    public ApiResponse<Void> handle(ResourceNotFoundException ex) {
+        return new ApiResponse<>(
+                HttpStatus.NOT_FOUND.value(),
+                false,
+                ex.getMessage(),
+                null
+        );
+    }
 
-        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ApiResponse<Void> handle(DuplicateResourceException ex) {
+        return new ApiResponse<>(
+                HttpStatus.CONFLICT.value(),
+                false,
+                ex.getMessage(),
+                null
+        );
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Void>> handleGeneric(Exception ex) {
-        ApiResponse<Void> response = ApiResponse.<Void>builder()
-                .success(false)
-                .message("Internal server error")
-                .data(null)
-                .build();
-
-        return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    public ApiResponse<Void> handleGeneric(Exception ex) {
+        return new ApiResponse<>(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                false,
+                ex.getMessage(),
+                null
+        );
     }
 }

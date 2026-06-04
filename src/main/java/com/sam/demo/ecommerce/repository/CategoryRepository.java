@@ -1,10 +1,12 @@
-package com.sam.demo.job.repository;
+package com.sam.demo.ecommerce.repository;
 
-import com.sam.demo.job.entity.Category;
+import com.sam.demo.ecommerce.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Optional<Category> findByName(String name);

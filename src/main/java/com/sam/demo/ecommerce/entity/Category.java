@@ -1,4 +1,4 @@
-package com.sam.demo.job.entity;
+package com.sam.demo.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
