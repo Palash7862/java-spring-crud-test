@@ -82,12 +82,16 @@ services:
     depends_on:
       - postgres
 
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
     networks:
       - ecommerce-network
 
 
 volumes:
   pgdata:
+  pgadmin:
   redisdata:
 
 networks:

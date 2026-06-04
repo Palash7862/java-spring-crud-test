@@ -12,7 +12,7 @@ COPY pom.xml .
 RUN chmod +x mvnw
 
 # Download dependencies (cached layer → faster builds)
-RUN ./mvnw dependency:go-offline
+# RUN ./mvnw dependency:go-offline
 
 # Now copy source code
 COPY src ./src
