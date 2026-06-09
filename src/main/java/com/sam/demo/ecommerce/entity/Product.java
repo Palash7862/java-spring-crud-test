@@ -3,33 +3,43 @@ package com.sam.demo.ecommerce.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name= "categories")
+@Table(name = "products")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Category {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
+    private String title;
+
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String description;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal regularPrice;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal salePrice;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = true)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Product> productList;
 
     @PrePersist
     public void prePersist() {
@@ -40,5 +50,4 @@ public class Category {
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
 }

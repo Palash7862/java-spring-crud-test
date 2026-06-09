@@ -1,7 +1,6 @@
 package com.sam.demo.exception;
 
 import com.sam.demo.dto.ApiResponse;
-import com.sam.demo.util.ResponseBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
